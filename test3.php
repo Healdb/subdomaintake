@@ -39,7 +39,6 @@ dvwaDatabaseConnect();
 	$result = @mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '.<br />Try <a href="setup.php">installing again</a>.</pre>' );
 echo '<pre>';
 while($row = mysql_fetch_array($result)) {
-    echo $row['column_name']; // Print a single column data
     echo print_r($row);       // Print the entire row data
 }
 echo '</pre>';
