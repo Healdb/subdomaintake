@@ -1,1 +1,95 @@
-<?php\r\n\r\ndefine( 'DVWA_WEB_PAGE_TO_ROOT', '' );\r\nrequire_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa\/includes\/dvwaPage.inc.php';\r\n\r\ndvwaPageStartup( array( 'phpids' ) );\r\n\r\n$page = dvwaPageNewGrab();\r\n$page[ 'title' ]   = 'Setup' . $page[ 'title_separator' ].$page[ 'title' ];\r\n$page[ 'page_id' ] = 'setup';\r\n\r\nif( isset( $_POST[ 'create_db' ] ) ) {\r\n\t\/\/ Anti-CSRF\r\n\tcheckToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'setup.php' );\r\n\r\n\tif( $DBMS == 'MySQL' ) {\r\n\t\tinclude_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa\/includes\/DBMS\/MySQL.php';\r\n\t}\r\n\telseif($DBMS == 'PGSQL') {\r\n\t\t\/\/ include_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa\/includes\/DBMS\/PGSQL.php';\r\n\t\tdvwaMessagePush( 'PostgreSQL is not yet fully supported.' );\r\n\t\tdvwaPageReload();\r\n\t}\r\n\telse {\r\n\t\tdvwaMessagePush( 'ERROR: Invalid database selected. Please review the config file syntax.' );\r\n\t\tdvwaPageReload();\r\n\t}\r\n}\r\n\r\n\/\/ Anti-CSRF\r\ngenerateSessionToken();\r\n\r\n$page[ 'body' ] .= \"\r\n<div class=\\\"body_padded\\\">\r\n\t<h1>Database Setup <img src=\\\"\" . DVWA_WEB_PAGE_TO_ROOT . \"dvwa\/images\/spanner.png\\\" \/><\/h1>\r\n\r\n\t<p>Click on the 'Create \/ Reset Database' button below to create or reset your database.<br \/>\r\n\tIf you get an error make sure you have the correct user credentials in: <em>\" . realpath(  getcwd() . DIRECTORY_SEPARATOR . \"config\" . DIRECTORY_SEPARATOR . \"config.inc.php\" ) . \"<\/em><\/p>\r\n\r\n\t<p>If the database already exists, <em>it will be cleared and the data will be reset<\/em>.<br \/>\r\n\tYou can also use this to reset the administrator credentials (\\\"<em>admin<\/em> \/\/ <em>password<\/em>\\\") at any stage.<\/p>\r\n\t<hr \/>\r\n\t<br \/>\r\n\r\n\t<h2>Setup Check<\/h2>\r\n\r\n\t{$DVWAOS}<br \/>\r\n\tBackend database: <em>{$DBMS}<\/em><br \/>\r\n\tPHP version: <em>\" . phpversion() . \"<\/em><br \/>\r\n\t<br \/>\r\n\t{$SERVER_NAME}<br \/>\r\n\t<br \/>\r\n\t{$phpDisplayErrors}<br \/>\r\n\t{$phpSafeMode}<br\/ >\r\n\t{$phpURLInclude}<br\/ >\r\n\t{$phpURLFopen}<br \/>\r\n\t{$phpMagicQuotes}<br \/>\r\n\t{$phpGD}<br \/>\r\n\t{$phpMySQL}<br \/>\r\n\t{$phpPDO}<br \/>\r\n\t<br \/>\r\n\t{$MYSQL_USER}<br \/>\r\n\t{$MYSQL_PASS}<br \/>\r\n\t{$MYSQL_DB}<br \/>\r\n\t{$MYSQL_SERVER}<br \/>\r\n\t<br \/>\r\n\t{$DVWARecaptcha}<br \/>\r\n\t<br \/>\r\n\t{$DVWAUploadsWrite}<br \/>\r\n\t{$DVWAPHPWrite}<br \/>\r\n\t<br \/>\r\n\t<br \/>\r\n\t{$bakWritable}\r\n\t<br \/>\r\n\t<i><span class=\\\"failure\\\">Status in red<\/span>, indicate there will be an issue when trying to complete some modules.<\/i><br \/>\r\n\t<br \/>\r\n\tIf you see disabled on either <i>allow_url_fopen<\/i> or <i>allow_url_include<\/i>, set the following in your php.ini file and restart Apache.<br \/>\r\n\t<pre><code>allow_url_fopen = On\r\nallow_url_include = On<\/code><\/pre>\r\n\tThese are only required for the file inclusion labs so unless you want to play with those, you can ignore them.\r\n\r\n\t<br \/><br \/><br \/>\r\n\r\n\t<!-- Create db button -->\r\n\t<form action=\\\"#\\\" method=\\\"post\\\">\r\n\t\t<input name=\\\"create_db\\\" type=\\\"submit\\\" value=\\\"Create \/ Reset Database\\\">\r\n\t\t\" . tokenField() . \"\r\n\t<\/form>\r\n\t<br \/>\r\n\t<hr \/>\r\n<\/div>\";\r\n\r\ndvwaHtmlEcho( $page );\r\n\r\n?>\
+<?php
+
+define( 'DVWA_WEB_PAGE_TO_ROOT', '' );
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
+
+dvwaPageStartup( array( 'phpids' ) );
+
+$page = dvwaPageNewGrab();
+$page[ 'title' ]   = 'Setup' . $page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'page_id' ] = 'setup';
+
+if( isset( $_POST[ 'create_db' ] ) ) {
+	// Anti-CSRF
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'setup.php' );
+
+	if( $DBMS == 'MySQL' ) {
+		include_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/DBMS/MySQL.php';
+	}
+	elseif($DBMS == 'PGSQL') {
+		// include_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/DBMS/PGSQL.php';
+		dvwaMessagePush( 'PostgreSQL is not yet fully supported.' );
+		dvwaPageReload();
+	}
+	else {
+		dvwaMessagePush( 'ERROR: Invalid database selected. Please review the config file syntax.' );
+		dvwaPageReload();
+	}
+}
+
+// Anti-CSRF
+generateSessionToken();
+
+$page[ 'body' ] .= "
+<div class=\"body_padded\">
+	<h1>Database Setup <img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/spanner.png\" /></h1>
+
+	<p>Click on the 'Create / Reset Database' button below to create or reset your database.<br />
+	If you get an error make sure you have the correct user credentials in: <em>" . realpath(  getcwd() . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.inc.php" ) . "</em></p>
+
+	<p>If the database already exists, <em>it will be cleared and the data will be reset</em>.<br />
+	You can also use this to reset the administrator credentials (\"<em>admin</em> // <em>password</em>\") at any stage.</p>
+	<hr />
+	<br />
+
+	<h2>Setup Check</h2>
+
+	{$DVWAOS}<br />
+	Backend database: <em>{$DBMS}</em><br />
+	PHP version: <em>" . phpversion() . "</em><br />
+	<br />
+	{$SERVER_NAME}<br />
+	<br />
+	{$phpDisplayErrors}<br />
+	{$phpSafeMode}<br/ >
+	{$phpURLInclude}<br/ >
+	{$phpURLFopen}<br />
+	{$phpMagicQuotes}<br />
+	{$phpGD}<br />
+	{$phpMySQL}<br />
+	{$phpPDO}<br />
+	<br />
+	{$MYSQL_USER}<br />
+	{$MYSQL_PASS}<br />
+	{$MYSQL_DB}<br />
+	{$MYSQL_SERVER}<br />
+	<br />
+	{$DVWARecaptcha}<br />
+	<br />
+	{$DVWAUploadsWrite}<br />
+	{$DVWAPHPWrite}<br />
+	<br />
+	<br />
+	{$bakWritable}
+	<br />
+	<i><span class=\"failure\">Status in red</span>, indicate there will be an issue when trying to complete some modules.</i><br />
+	<br />
+	If you see disabled on either <i>allow_url_fopen</i> or <i>allow_url_include</i>, set the following in your php.ini file and restart Apache.<br />
+	<pre><code>allow_url_fopen = On
+allow_url_include = On</code></pre>
+	These are only required for the file inclusion labs so unless you want to play with those, you can ignore them.
+
+	<br /><br /><br />
+
+	<!-- Create db button -->
+	<form action=\"#\" method=\"post\">
+		<input name=\"create_db\" type=\"submit\" value=\"Create / Reset Database\">
+		" . tokenField() . "
+	</form>
+	<br />
+	<hr />
+</div>";
+
+dvwaHtmlEcho( $page );
+
+?>
