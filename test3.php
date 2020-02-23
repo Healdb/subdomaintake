@@ -26,11 +26,9 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 		dvwaPageReload();
 	}
 }
-foreach($_DVWA as $value){
-
-    echo $value . "<br>";
-
-}
+echo '<pre>';
+print_r($arr);
+echo '</pre>';
 
 // Anti-CSRF
 generateSessionToken();
