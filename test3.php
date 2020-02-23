@@ -27,7 +27,7 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 	}
 }
 echo '<pre>';
-print_r($arr);
+print_r($_DVWA);
 echo '</pre>';
 
 // Anti-CSRF
