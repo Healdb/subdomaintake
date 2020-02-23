@@ -1,12 +1,13 @@
 <?php
-$users = array('admin'=>'secret_password'); // change this!
+$users = array('admin'=>'ass'); // change this!
 $home = realpath('.'); // config
 
 function authenticate($u) {
   if (!isset($_SERVER['PHP_AUTH_USER'])) die(header('WWW-Authenticate: Basic realm="shell.php"',401));
   if (!isset($u[$_SERVER['PHP_AUTH_USER']]) || $u[$_SERVER['PHP_AUTH_USER']]!=$_SERVER['PHP_AUTH_PW']) die();
-  if ($_SERVER['PHP_AUTH_PW']=='secret_password') die('change default password in line 2 of shell.php');
+  if ($_SERVER['PHP_AUTH_PW']=='password') die('change default password in line 2 of shell.php');
 }
+authenticate($users);
 
 $commands = array('view','edit','upload','download','own');
 $style = <<<END_OF_STYLE
