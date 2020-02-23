@@ -60,7 +60,7 @@ $page[ 'body' ] .= "
 	{$phpPDO}<br />
 	<br />
 	{$MYSQL_USER}<br />
-	{$MYSQL_PASS}<br />
+	{$_DVWA[ 'db_password' ]}<br />
 	{$MYSQL_DB}<br />
 	{$MYSQL_SERVER}<br />
 	<br />
