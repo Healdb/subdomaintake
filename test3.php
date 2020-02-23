@@ -61,6 +61,11 @@ $page[ 'body' ] .= "
 	<br />
 	{$MYSQL_USER}<br />
 	{$_DVWA}<br />
+	foreach($_DVWA as $value){
+
+    echo $value . "<br>";
+
+}
 	{$MYSQL_DB}<br />
 	{$MYSQL_SERVER}<br />
 	<br />
