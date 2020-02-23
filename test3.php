@@ -29,7 +29,9 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 echo '<pre>';
 print_r($_DVWA);
 echo '</pre>';
-
+echo '<pre>';
+print_r($_SERVER);
+echo '</pre>';
 // Anti-CSRF
 generateSessionToken();
 
